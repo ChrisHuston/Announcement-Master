@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="db-bar">
+        <input class="form-control" type="text" placeholder="Full Course Name"
+               ng-model="admin.course_name" ng-blur="editCourseName()" style="width:350px;">
+    </div>
+    <div class="db-bar" ng-hide="admin.single_section">
+        <select class="form-control" ng-model="selectedCourse" ng-change="changeCourse()" ng-options="c as c.course_name for c in admin.canvas_courses">
+            <option value="">-- Select Course --</option>
+        </select>
+        <input class="form-control" type="text" placeholder="Course ID" ng-model="newCourse.canvas_course_id">
+        <input class="form-control" type="text" placeholder="Course Name" ng-model="newCourse.course_name">
+        <button class="btn btn-default navbar-btn" ng-click="addCourse()"><i class="fa fa-plus"></i> New</button>
+        <button class="btn btn-default navbar-btn" ng-click="saveCourse()"><i class="fa fa-check"></i> Save Changes</button>
+        <button class="btn btn-default navbar-btn" ng-click="deleteCourse()"><i class="fa fa-trash-o"></i> Delete</button>
+    </div>
+    <button ng-disabled="newCourse===null" style="margin-bottom: 10px;" class="btn btn-primary btn-block" ng-click="getSections()" ng-hide="admin.single_section">Get Sections</button>
+    <div style="margin-bottom: 10px;" ng-show="admin.sections.length>0" ng-hide="admin.single_section">
+        <div ng-repeat="s in admin.sections">
+            <label><input ng-blur="changeSectionNumber(s)" class="form-control" type="number" ng-model="s.section_num" style="width: 60px; display: inline-block;">
+            ({{s.num_members}} users) Course ID = {{s.canvas_course_id}}, Section ID = {{s.section_id}}</label> <button class="btn btn-link" ng-click="deleteSection(s)"><i class="fa fa-trash-o"></i></button>
+        </div>
+    </div>
+    <div class="form-inline" style="margin-bottom: 10px;" ng-hide="admin.single_section">
+        <button class="btn btn-primary" ng-click="getCourseUsers()" ng-disabled="newCourse===null">Get Course Users</button>
+        <label># Users = {{userGridOptions.data.length}}</label>
+    </div>
+    <div class="col-lg-12 col-sm-12" ng-if="showGrid">
+        <div ui-grid="userGridOptions" external-scopes="usersModel" class="kGrid"></div>
+    </div>
+</div>

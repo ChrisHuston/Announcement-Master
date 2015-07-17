@@ -1,0 +1,47 @@
+<div class="alert alert-danger" ng-show="user.loginError">
+    <p>Cookies must be enabled for this application to run in Canvas</p>
+    <p>For Chrome:</p>
+    <ol>
+        <li>Click the menu button (three bars icon) in the right in the top menu and select <strong>Settings</strong></li>
+        <li>Click the <strong>Show advanced settings...</strong> link at the bottom.</li>
+        <li>Click the <strong>Content settings</strong> button under Privacy</li>
+        <li>Un-check the <strong>Block third-party cookies and site data</strong></li>
+        <li>OR click Manage exceptions and add "www.kblocks.com" and set to Allow</li>
+    </ol>
+    <p>For Firefox:</p>
+    <ol>
+        <li>Click the menu button (three bars icon) in the right in the top menu and select Preferences</li>
+        <li>Select the <strong>Privacy</strong> panel.</li>
+        <li>Set <strong>Firefox will:</strong> to <strong>Use custom settings for history</strong>.</li>
+        <li>Set <strong>Accept third-party cookies</strong> to <strong>From Visited</strong> or <strong>Always</strong></li>
+    </ol>
+    <p>For Safari:</p>
+    <ol>
+        <li>Click Safari in the top menu and select Preferences</li>
+        <li>Select the <strong>Privacy</strong> tab</li>
+        <li>Select <strong>Never</strong> for <strong>Block cookies and other website data</strong></li>
+        <li>Reload your browser</li>
+    </ol>
+</div>
+
+<div>
+    <h4>Announcements</h4>
+    <table class="table">
+        <tbody>
+        <tr ng-repeat="ann in user.announcements">
+            <td>
+                <div class="media" style="margin-bottom: 5px;">
+                    <div class="pull-left poster-img" ng-show="ann.canvas_img">
+                        <img ng-src="{{ann.canvas_img}}" class="media-object img-responsive img-rounded">
+                    </div>
+                    <div class="media-body">
+                        <h4><a ng-click="toggleShowAnnouncement(ann)" href>{{ann.title}}</a></h4>
+                        <p class="text-muted comment-src">By <a ng-href="mailto:{{ann.email}}?subject={{ann.title}}" target="_blank">{{ann.user_name}}</a>, posted on {{ann.post_date | date:"MMM dd, yyyy @ hh:mm a"}}</p>
+                    </div>
+                </div>
+                <div ng-bind-html="ann.announcement_txt" ng-show="ann.show_announcement"></div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

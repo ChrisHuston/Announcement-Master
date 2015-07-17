@@ -1,0 +1,97 @@
+<div class="alert alert-info" ng-show="currentAnnouncement.progress">
+    <p>Emailing {{currentAnnouncement.title}} to selected sections...</p>
+</div>
+<div class="alert alert-success" ng-show="currentAnnouncement.delivered">
+    <p>{{currentAnnouncement.title}} emailed to {{currentAnnouncement.delivered}} recipients.</p>
+</div>
+<div class="db-bar">
+    <div style="display: inline-block"
+         multi-select
+         input-model="admin.sections"
+         output-model="selectedSections"
+         button-label="section_name"
+         item-label="section_name"
+         tick-property="ticked"
+         orientation="vertical"
+         selection-mode="multiple"
+         max-labels="2"
+         directive-id="section_selector"
+         is-disabled="false"
+         helper-elements="all none filter"
+         default-label="- Section -">
+    </div>
+    <button class="btn btn-primary navbar-btn" ng-click="addAnnouncement()"><i class="fa fa-envelope-o"></i> Send & Add New</button>
+    <button style="margin-left: 15px;" ng-show="selectedAnnouncement" class="btn btn-default navbar-btn" ng-click="saveAnnouncement()"><i class="fa fa-check"></i> Save Changes</button>
+    <label ng-show="selectedAnnouncement" style="padding-left: 10px;"><input type="checkbox" ng-model="email_edited"> Email Saved Changes</label>
+    <button ng-show="selectedAnnouncement" class="btn btn-default navbar-btn pull-right" ng-click="deleteAnnouncement()"><i class="fa fa-trash-o"></i> Delete</button>
+</div>
+<div class="db-bar" style="padding-top: 4px;">
+    <button class="btn btn-info" ng-click="formatTables()">Format Tables</button>
+    <div style="display: inline-block" flow-init="flow_config"
+         flow-files-submitted="$flow.upload()"
+         flow-complete="uploadComplete('img')"
+         flow-file-added="addedUpload($file, $event)">
+                            <span class="btn btn-success" flow-btn=""><i class="fa fa-upload"></i> Image
+                                <input type="file" style="visibility: hidden; position: absolute;">
+                            </span>
+    </div>
+    <div style="display: inline-block" flow-init="flow_config"
+         flow-files-submitted="$flow.upload()"
+         flow-object="existingFlowObject"
+         flow-complete="uploadComplete('video')"
+         flow-file-added="addedUpload($file, $event)">
+                            <span class="btn btn-success" flow-btn=""><i class="fa fa-upload"></i> Video
+                                <input type="file" style="visibility: hidden; position: absolute;">
+                            </span>
+    </div>
+
+    <div style="display: inline-block" flow-init="flow_config"
+         flow-files-submitted="$flow.upload()"
+         flow-object="existingFlowObject"
+         flow-complete="uploadComplete('file')"
+         flow-file-added="addedUpload($file, $event)">
+                            <span class="btn btn-success" flow-btn=""><i class="fa fa-upload"></i> File
+                                <input type="file" style="visibility: hidden; position: absolute;">
+                            </span>
+    </div>
+</div>
+        <form class="form-horizontal" role="form" style="margin-top:20px;">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">Title</label>
+                <div class="col-sm-11">
+                    <input type="text" class="form-control" ng-model="currentAnnouncement.title">
+                </div>
+            </div>
+        </form>
+<div style="margin-bottom: 10px; margin-top:10px;">
+    <textarea id="announcement_txt" class="form-control" rows="6"></textarea>
+</div>
+
+<table class="table table-condensed table-bordered">
+    <tbody>
+    <tr>
+        <td class="table-header active">Announcements</td>
+        <td class="table-header active">Sections</td>
+    </tr>
+    <tr ng-repeat="ann in user.announcements" class="fhp-cursor">
+        <td>
+            <div class="media" style="margin-bottom: 5px;">
+                <div class="pull-left poster-img" ng-show="ann.canvas_img">
+                    <img ng-src="{{ann.canvas_img}}" class="media-object img-responsive img-rounded">
+                </div>
+                <div class="media-body">
+                    <button class="btn btn-warning btn-sm pull-right" ng-click="selectAnnouncement(ann)">Edit</button>
+                    <h4><a ng-click="toggleShowAnnouncement(ann)" href>{{ann.title}}</a></h4>
+                    <p class="text-muted comment-src">By <a ng-href="mailto:{{ann.email}}?subject={{ann.title}}" target="_blank">{{ann.user_name}}</a>, posted on {{ann.post_date | date:"MMM dd, yyyy @ hh:mm a"}}</p>
+                </div>
+            </div>
+            <div ng-bind-html="ann.announcement_txt" ng-show="ann.show_announcement"></div>
+        </td>
+        <td style="width:120px;">
+            <ul class="section">
+                <li ng-repeat="s in ann.sections"><label><input type="checkbox" ng-change="toggleAnnouncementSection(ann, s)" ng-model="s.can_view"> Section {{s.section_num}}</label></li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>

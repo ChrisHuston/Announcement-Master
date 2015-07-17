@@ -1,0 +1,47 @@
+body { padding-top: 60px; }
+
+.kGrid {
+    height: 500px;
+}
+
+.db-bar {
+    background-color: #fdfdfd;
+    border: 1px solid #dedede;
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top:0;
+    padding-bottom: 0;
+    margin-top:5px;
+    margin-bottom: 5px;
+    height:45px;
+}
+
+.db-bar input[type=text] {
+    display:inline-block;
+    width:180px;
+    margin-top:3px;
+}
+
+.db-bar .form-control {
+    width: 180px;
+    display: inline-block !important;
+}
+
+.db-bar .navbar-btn {
+    margin-top:5px !important;
+}
+
+.db-bar select {
+    margin-top:5px;
+}
+
+ul.section {
+    list-style-type: none;
+    padding-left:0;
+}
+
+.poster-img {
+    width:64px;
+    height:64px;
+}
