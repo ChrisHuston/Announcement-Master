@@ -57,16 +57,16 @@ if (isset($_SESSION['net_id']) && isset($_SESSION['priv_level']) && $_SESSION['p
             $mail->send();
             $mail->clearAddresses();
             $mail->clearBCCs();
-            $mail->addAddress($canvas_course_id.'@kblocks.com',$course_name);
+            $mail->addAddress($canvas_course_id.'@your_server.com',$course_name);
         }
         if ($is_new_course) {
             $body = "<h3>".$course_name." Announcement</h3>";
             $body .= "<h4>".$title."</h4>";
             $body .= $announcement_txt;
-            $body .= '<p><a href="https://canvas.dartmouth.edu/courses/'.$canvas_course_id.'">'.$course_name.'</a></p>';
+            $body .= '<p><a href="https://your_canvas_url/courses/'.$canvas_course_id.'">'.$course_name.'</a></p>';
             $mail->Body = $body;
             $prev_course_id = $canvas_course_id;
-            $mail->addAddress($canvas_course_id.'@kblocks.com',$course_name);
+            $mail->addAddress($canvas_course_id.'@your_server.com',$course_name);
         }
         $mail->addBCC($user_email,$user_name);
         $sent_mail = $sent_mail + 1;
